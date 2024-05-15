@@ -46,7 +46,7 @@ import RegisterConfirmation from "./pages/Register/RegisterConfirm";
 import MyAttributes from "./pages/Attributes/MyAttributes";
 import AddAttribute from "./pages/Attributes/AddAttribute";
 import { CreateTransaction } from "./pages/transactions/CreateTransaction";
-
+import LandingPage from "./pages/LandingPage/LandingPage";
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -59,6 +59,7 @@ const App: React.FC = () => {
           </Route>
           <Route path="/login" exact={true} component={Login} />
           <Route path="/register" exact={true} component={Register} />
+          <Route path="/landingPage" exact={true} component={LandingPage} />
           <Route
             path="/register_confirmation"
             exact={true}
