@@ -4,6 +4,7 @@ import {
   IonCard,
   IonCardContent,
   IonCardHeader,
+  IonCardSubtitle,
   IonCardTitle,
   IonContent,
   IonHeader,
@@ -14,37 +15,37 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { Route, RouteComponentProps, useHistory, useLocation } from "react-router";
-import { EnterEmail } from "../../components/EnterEmail";
 import { EnterConfirmCode } from "../../components/EnterConfirmCode";
 import { useEffect, useRef } from "react";
 import { useConfirmCodeMutation, useCreateCodeConfirmationMutation } from "../../app/api/backend";
 import { AttrbuteType } from "./AddAttribute";
+import { EnterPhone } from "../../components/EnterPhone";
 
-export const AddEmailAttribute: React.FC<RouteComponentProps> = ({ match }) => {
+export const AddPhoneAttribute: React.FC<RouteComponentProps> = ({ match }) => {
   return (
     <IonPage>
       <IonRouterOutlet>
-        <Route path={`${match.url}`} exact component={AddEmailAttributeStep1} />
+        <Route path={`${match.url}`} exact component={AddPhoneAttributeStep1} />
         <Route
           path={`${match.url}/send`}
           exact
-          component={AddEmailAttributeStep2}
+          component={AddPhoneAttributeStep2}
         />
         <Route
           path={`${match.url}/confirm/:uid`}
           exact
-          component={AddEmailAttributeStep3}
+          component={AddPhoneAttributeStep3}
         />
       </IonRouterOutlet>
     </IonPage>
   );
 };
 
-const AddEmailAttributeStep1 = () => {
+const AddPhoneAttributeStep1 = () => {
   const history = useHistory();
 
-  const onEnterEmail = (email: string) => {
-    history.push(`/add_attribute/EMAIL/send`, { email });
+  const onEnterPhone = (email: string) => {
+    history.push(`/add_attribute/PHONE/send`, { email });
   };
 
   return (
@@ -54,16 +55,16 @@ const AddEmailAttributeStep1 = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/attributes"></IonBackButton>
           </IonButtons>
-          <IonTitle>Add Email</IonTitle>
+          <IonTitle>Add Phone</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonCard>
           <IonCardHeader>
-            <IonCardTitle>Add Email</IonCardTitle>
+            <IonCardTitle>Add Phone</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <EnterEmail ctaTitle="Add Email" cta={onEnterEmail} />
+            <EnterPhone ctaTitle="Add Phone" cta={onEnterPhone} />
           </IonCardContent>
         </IonCard>
       </IonContent>
@@ -71,9 +72,9 @@ const AddEmailAttributeStep1 = () => {
   );
 };
 
-const AddEmailAttributeStep2: React.FC<RouteComponentProps> = ({  }) => {
+const AddPhoneAttributeStep2: React.FC<RouteComponentProps> = ({  }) => {
     const history = useHistory();
-    const location = useLocation<{ email: string }>()
+    const location = useLocation<{ phone: string }>()
     const initializedRef = useRef(false);
     const [ createConfirmation, result ] = useCreateCodeConfirmationMutation()
 
@@ -83,8 +84,8 @@ const AddEmailAttributeStep2: React.FC<RouteComponentProps> = ({  }) => {
             initializedRef.current = true;
             console.log(location)
             createConfirmation({
-                type: AttrbuteType.EMAIL,
-                email: location.state.email,
+                type: AttrbuteType.PHONE,
+                phone: location.state.phone,
             })
         }
     }, [initializedRef, location])
@@ -92,7 +93,7 @@ const AddEmailAttributeStep2: React.FC<RouteComponentProps> = ({  }) => {
     useEffect(() => {
         if(result.isSuccess) {
             const { uid } = result.data;
-            history.replace(`/add_attribute/EMAIL/confirm/${uid}`, { uid });
+            history.replace(`/add_attribute/PHONE/confirm/${uid}`, { uid });
         }
     }, [result])
 
@@ -101,15 +102,15 @@ const AddEmailAttributeStep2: React.FC<RouteComponentProps> = ({  }) => {
       <IonHeader translucent={true}>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/add_attribute/EMAIL"></IonBackButton>
+            <IonBackButton defaultHref="/add_attribute/PHONE"></IonBackButton>
           </IonButtons>
-          <IonTitle>Add Email</IonTitle>
+          <IonTitle>Add Phone</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonCard>
           <IonCardHeader>
-            <IonCardTitle>Sending Email</IonCardTitle>
+            <IonCardTitle>Sending Phone</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
             <IonSpinner name="lines"></IonSpinner>
@@ -121,11 +122,11 @@ const AddEmailAttributeStep2: React.FC<RouteComponentProps> = ({  }) => {
   );
 };
 
-type AddEmailAttributeStep3MatchParams = {
+type AddPhoneAttributeStep3MatchParams = {
     uid: string;
 }
 
-const AddEmailAttributeStep3: React.FC<RouteComponentProps<AddEmailAttributeStep3MatchParams>> = ({match}) => {
+const AddPhoneAttributeStep3: React.FC<RouteComponentProps<AddPhoneAttributeStep3MatchParams>> = ({match}) => {
     const history = useHistory();
     const [ createCodeConfirmation, result ] = useConfirmCodeMutation()
 
@@ -144,9 +145,9 @@ const AddEmailAttributeStep3: React.FC<RouteComponentProps<AddEmailAttributeStep
         <IonHeader translucent={true}>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonBackButton defaultHref="/add_attribute/EMAIL"></IonBackButton>
+              <IonBackButton defaultHref="/add_attribute/PHONE"></IonBackButton>
             </IonButtons>
-            <IonTitle>Add Email Confirmation</IonTitle>
+            <IonTitle>Add Phone Confirmation</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen className="ion-padding">

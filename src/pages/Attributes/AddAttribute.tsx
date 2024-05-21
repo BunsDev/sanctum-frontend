@@ -10,6 +10,8 @@ import {
 } from "@ionic/react";
 import { Route, RouteComponentProps } from "react-router";
 import { AddEmailAttribute } from "./AddEmailAttribute";
+import { AddPhoneAttribute } from "./AddPhoneAttribute";
+import { AddIdttribute } from "./AddIdAttribute";
 
 export enum AttrbuteType {
   EMAIL = "EMAIL",
@@ -23,9 +25,17 @@ const AddAttribute: React.FC<RouteComponentProps> = ({ match }) => {
   return (
     <IonPage>
       <IonRouterOutlet>
-        <Route
+      <Route
           path={`/add_attribute/${AttrbuteType.EMAIL}`}
           component={AddEmailAttribute}
+        />
+        <Route
+          path={`/add_attribute/${AttrbuteType.PHONE}`}
+          component={AddPhoneAttribute}
+        />
+        <Route
+          path={`/add_attribute/${AttrbuteType.ID}`}
+          component={AddIdttribute}
         />
         <Route component={NotFoundPage} />
       </IonRouterOutlet>

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const backendApi = createApi({
     reducerPath: 'pokemonApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3030/api/v1/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8787/api/v1/' }),
     endpoints: (builder) => ({
       // 
       createCodeConfirmation: builder.mutation<any, any>({
@@ -20,7 +20,16 @@ export const backendApi = createApi({
           body: payload,
         })
       }),
+      //
+      uploadPhoto: builder.mutation<any, any>({
+        query: ({ ...payload }) => ({
+          url: `upload`,
+          method: 'PUT',
+          body: payload,
+        })
+      }),
+
     }),
   })
 
-  export const { useCreateCodeConfirmationMutation, useConfirmCodeMutation } = backendApi
+  export const { useCreateCodeConfirmationMutation, useConfirmCodeMutation, useUploadPhotoMutation } = backendApi

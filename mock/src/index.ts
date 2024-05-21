@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import { Snowflake } from 'nodejs-snowflake'
 
 const app: Express = express();
-const port = process.env.PORT || 3030;
+const port = process.env.PORT ?? 3030;
 
 const uid = new Snowflake();
 

@@ -58,7 +58,7 @@ const App: React.FC = () => {
             <Redirect to={"/attributes"} />
           </Route>
           <Route path="/login" exact={true} component={Login} />
-          <Route path="/register" exact={true} component={Register} />
+          <Route path="/register" component={Register} />
           <Route path="/landingPage" exact={true} component={LandingPage} />
           <Route
             path="/register_confirmation"
