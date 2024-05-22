@@ -47,6 +47,9 @@ import MyAttributes from "./pages/Attributes/MyAttributes";
 import AddAttribute from "./pages/Attributes/AddAttribute";
 import { CreateTransaction } from "./pages/transactions/CreateTransaction";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import EcommercePage from "./pages/EcommerceTestCase/EcommercePage";
+import ProductPage from "./pages/EcommerceTestCase/ProductPage";
+import CartPage from "./pages/EcommerceTestCase/CartPage";
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -60,6 +63,9 @@ const App: React.FC = () => {
           <Route path="/login" exact={true} component={Login} />
           <Route path="/register" exact={true} component={Register} />
           <Route path="/landingPage" exact={true} component={LandingPage} />
+          <Route path="/Ecommerce" exact={true} component={EcommercePage} />
+          <Route path="/ProductPage" exact={true} component={ProductPage} />
+          <Route path="/CartPage" exact={true} component={CartPage} />
           <Route
             path="/register_confirmation"
             exact={true}

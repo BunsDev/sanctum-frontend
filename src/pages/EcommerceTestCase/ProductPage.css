@@ -1,0 +1,61 @@
+/* ProductPage.css */
+
+/* General padding for the page */
+.ion-padding {
+    padding: 16px;
+  }
+  
+  /* Styling for the product card */
+  .product-card {
+    margin-bottom: 16px;
+  }
+  
+  /* Image styling for the product */
+  .product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  /* Title and subtitle styling */
+  .ion-card-title,
+  .ion-card-subtitle {
+    font-weight: bold;
+  }
+  
+  /* Content paragraph styling */
+  .ion-card-content p {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #6d6d6d;
+  }
+  
+  /* Button styling */
+  .ion-button {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  /* Reviews styling */
+  .ion-list {
+    margin-top: 16px;
+  }
+  
+  .ion-item {
+    margin-bottom: 16px;
+  }
+  
+  .ion-thumbnail img {
+    border-radius: 50%;
+  }
+  
+  .ion-label h2 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .ion-label p {
+    font-size: 14px;
+    color: #6d6d6d;
+  }
+  
