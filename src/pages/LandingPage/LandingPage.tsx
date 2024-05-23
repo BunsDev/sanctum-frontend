@@ -26,7 +26,7 @@ const LandingPage: React.FC = () => {
           </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}>
             <IonCard className="landing-card">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+              <img alt="Silhouette of mountains" src="logo.png" />
               <IonCardHeader>
                 <IonCardTitle>A new Digital ID for a New Era</IonCardTitle>
                 <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
@@ -36,7 +36,7 @@ const LandingPage: React.FC = () => {
           </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 1 }}>
             <IonCard className="landing-card">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+              <img alt="Silhouette of mountains" src="logo.png" />
               <IonCardHeader>
                 <IonCardTitle>Making web3 available to general public</IonCardTitle>
                 <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
@@ -46,7 +46,7 @@ const LandingPage: React.FC = () => {
           </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5, duration: 1 }}>
             <IonCard className="landing-card">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+              <img alt="Silhouette of mountains" src="logo.png" />
               <IonCardHeader>
                 <IonCardTitle>Powered by Chainlink Technology</IonCardTitle>
                 <IonCardSubtitle>Card Subtitle</IonCardSubtitle>

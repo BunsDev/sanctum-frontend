@@ -19,9 +19,9 @@ import { useHistory } from 'react-router-dom';
 import './ProductPage.css';
 
 const products = [
-  { id: 1, name: 'Product 1', price: 99.99, description: 'Description for Product 1', img: 'https://ionicframework.com/docs/img/demos/thumbnail.svg' },
-  { id: 2, name: 'Product 2', price: 79.99, description: 'Description for Product 2', img: 'https://ionicframework.com/docs/img/demos/thumbnail.svg' },
-  { id: 3, name: 'Product 3', price: 59.99, description: 'Description for Product 3', img: 'https://ionicframework.com/docs/img/demos/thumbnail.svg' },
+  { id: 1, name: 'Television', price: 99.99, description: 'Sony Television', img: 'imp1.png' },
+  { id: 2, name: 'Wireless Speakers', price: 79.99, description: 'Sony Wireless Speakers for good sound', img: 'imp2.png' },
+  { id: 3, name: 'Camera ', price: 59.99, description: 'Sony camera for clear pictures', img: 'imp3.png' },
 ];
 
 const ProductPage: React.FC = () => {
@@ -41,7 +41,7 @@ const ProductPage: React.FC = () => {
       <IonHeader>
         <IonToolbar color="primary">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/login" />
+            <IonBackButton defaultHref="/Ecommerce" />
           </IonButtons>
           <IonTitle>Product Details</IonTitle>
         </IonToolbar>
