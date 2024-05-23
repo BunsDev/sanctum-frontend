@@ -18,18 +18,25 @@ import {
 import { useHistory } from 'react-router-dom';
 import './ProductPage.css';
 
-const products = [
-  { id: 1, name: 'Television', price: 99.99, description: 'Sony Television', img: 'imp1.png' },
-  { id: 2, name: 'Wireless Speakers', price: 79.99, description: 'Sony Wireless Speakers for good sound', img: 'imp2.png' },
-  { id: 3, name: 'Camera ', price: 59.99, description: 'Sony camera for clear pictures', img: 'imp3.png' },
+const initialProducts = [
+  { id: 1, name: 'Television', price: 99.99, description: 'Sony Television', img: 'imp1.png', stock: 10 },
+  { id: 2, name: 'Wireless Speakers', price: 79.99, description: 'Sony Wireless Speakers for good sound', img: 'imp2.png', stock: 5 },
+  { id: 3, name: 'Camera ', price: 59.99, description: 'Sony camera for clear pictures', img: 'imp3.png', stock: 8 },
 ];
 
 const ProductPage: React.FC = () => {
+  const [products, setProducts] = useState(initialProducts);
   const [cart, setCart] = useState<any[]>([]);
   const history = useHistory();
 
   const addToCart = (product: any) => {
-    setCart([...cart, product]);
+    if (product.stock > 0) {
+      setCart([...cart, product]);
+      const updatedProducts = products.map((p) =>
+        p.id === product.id ? { ...p, stock: p.stock - 1 } : p
+      );
+      setProducts(updatedProducts);
+    }
   };
 
   const viewCart = () => {
@@ -56,8 +63,14 @@ const ProductPage: React.FC = () => {
             </IonCardHeader>
             <IonCardContent>
               <p>{product.description}</p>
-              <IonButton expand="block" color="primary" onClick={() => addToCart(product)}>
-                Add to Cart
+              <p>Stock: {product.stock}</p>
+              <IonButton 
+                expand="block" 
+                color="primary" 
+                onClick={() => addToCart(product)}
+                disabled={product.stock === 0}
+              >
+                {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
               </IonButton>
             </IonCardContent>
           </IonCard>
