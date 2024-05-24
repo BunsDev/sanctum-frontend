@@ -19,19 +19,19 @@ import { Route, RouteComponentProps, useHistory } from "react-router";
 import { CameraScanner } from "../../components/MockScanner/CameraScanner";
 import { Photo } from "@capacitor/camera";
 import { useState } from "react";
+import { AddIdAttributeWithPersonaStep1 } from './AddIdWithPersona'
 
 export const AddIdttribute: React.FC<RouteComponentProps> = ({ match }) => {
   return (
     <IonPage>
       <IonRouterOutlet>
-        <Route path={`${match.url}`} exact component={AddIdttributeMockStep1} />
+        <Route path={`${match.url}`} exact component={AddIdAttributeWithPersonaStep1} />
         <Route path={`${match.url}/verify`} exact component={AddIdttributeMockStep2} />
       </IonRouterOutlet>
     </IonPage>
   );
 };
 
-// TODO: Flow
 // Capture -> Preview -> Verified -> Transaction
 
 const AddIdttributeMockStep1 = () => {
