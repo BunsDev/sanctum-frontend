@@ -20,8 +20,8 @@ import {
 
 type AttributeItemProps = {
   attribute: {
-    name: string;
-    type: AttrbuteType;
+    AttributeValue: string;
+    AttributeType: AttrbuteType;
   };
 };
 
@@ -29,8 +29,8 @@ export const AttributeItem: React.FC<AttributeItemProps> = ({ attribute }) => {
   return (
     <IonItemSliding>
       <IonItem>
-        <AttributeIcon type={attribute.type} />
-        <IonLabel style={{paddingLeft: '5px'}}>{attribute.name}</IonLabel>
+        <AttributeIcon type={attribute.AttributeType} />
+        <IonLabel style={{paddingLeft: '5px'}}>{attribute.AttributeValue}</IonLabel>
       </IonItem>
       <IonItemOptions>
         <IonItemOption>Favorite</IonItemOption>
@@ -47,12 +47,14 @@ type AttributeIconProps = {
 const AttributeIcon: React.FC<AttributeIconProps> = ({ type }) => {
   switch (type) {
     case AttrbuteType.EMAIL:
+    case AttrbuteType.PrimaryEmail:
       return <IonIcon icon={mail} about="Mail" title="Email"></IonIcon>;
     case AttrbuteType.PHONE:
       return <IonIcon icon={call} about="Phone" title="Phone"></IonIcon>;
     case AttrbuteType.ADDRESS:
       return <IonIcon icon={home} about="Addres" title="Address"></IonIcon>;
     case AttrbuteType.WALLET:
+    case AttrbuteType.Wallet:
       return <IonIcon icon={wallet} about="Wallet" title="Wallets"></IonIcon>;
     case AttrbuteType.ID:
       return <IonIcon icon={person} about="ID" title="ID"></IonIcon>;

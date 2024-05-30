@@ -9,7 +9,11 @@ import {
 import { useHistory, useLocation } from "react-router";
 import { Web3 } from "web3";
 import CreateAndAuthenticateSanctumLinkidentityV2 from "../../abi/CreateAndAuthenticateSanctumLinkidentityV2.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useProviders } from "../../hooks/useProviders";
+import { useDispatch } from "react-redux";
+import { useStoreAttributesMutation, useStoreIdentityMutation } from "../../app/api/backend";
+import { setIdentity } from "../../app/connections/connectionsSlice";
 
 enum TransactionStates {
   NOT_SENT,
@@ -21,12 +25,15 @@ enum TransactionStates {
 }
 
 export const CreateTransaction = ({}) => {
+  const provider = useProviders()
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const location = useLocation<{ result: { value: string, valueHash: string, type: string, valueHashSignature: string } }>();
   const [stateMessage, setStateMessage] = useState("");
   const [transactionState, setTransactionState] = useState(
     TransactionStates.NOT_SENT
   );
-  const history = useHistory();
-  const location = useLocation<{ result: { value: string, valueHash: string, type: string, signature: string } }>();
+  const [doStoreIdentity, resultStoreIdentity] = useStoreIdentityMutation();
 
   const onSendTransaction = async () => {
     if (window.ethereum) {
@@ -36,6 +43,8 @@ export const CreateTransaction = ({}) => {
 
       // Get the connected accounts
       const accounts = await web3.eth.getAccounts();
+
+      // return storeIdentity(accounts[0], "0xa957d485de4666277cfa9ce6b55f418975dd4c154558c377cfafdc188bcc374d" as string);
 
       const sanctumLinkContract = new web3.eth.Contract(
         CreateAndAuthenticateSanctumLinkidentityV2.abi,
@@ -104,8 +113,22 @@ export const CreateTransaction = ({}) => {
     }
   };
 
-  const storeIdentity = async (account: string, identityId: string) => {
+  useEffect(() => {
+    if (resultStoreIdentity.isSuccess) {
+      console.log({resultStoreIdentity})
+      history.replace("/attributes", { });
+    }
+  }, [resultStoreIdentity]);
 
+  const storeIdentity = async (account: string, identityId: string) => {
+    const resp = await doStoreIdentity({
+      id: identityId,
+      email: location.state.result.value,
+      account: account,
+      signature: location.state.result.valueHashSignature,
+    });
+    console.log({resp})
+    dispatch(setIdentity(identityId))
   };
 
   return (

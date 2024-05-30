@@ -19,6 +19,8 @@ export enum AttrbuteType {
   ADDRESS = "ADDRESS",
   WALLET = "WALLET",
   ID = "ID",
+  PrimaryEmail = "PrimaryEmail",
+  Wallet = "Wallet",
 }
 
 const AddAttribute: React.FC<RouteComponentProps> = ({ match }) => {
