@@ -1,26 +1,20 @@
 import {
     IonBackButton,
-    IonButton,
     IonButtons,
     IonCard,
     IonCardContent,
     IonCardHeader,
     IonCardSubtitle,
     IonCardTitle,
-    IonCol,
     IonContent,
-    IonGrid,
     IonHeader,
-    IonInput,
-    IonItem,
     IonPage,
-    IonRow,
     IonTitle,
     IonToolbar
 } from "@ionic/react";
-import { useState } from "react";
 import { EnterConfirmCode } from "../../components/EnterConfirmCode";
 
+// @Deprecated: Not used
 const RegisterConfirmation: React.FC = () => {
 
   const onConfirm = (code:string) => {}

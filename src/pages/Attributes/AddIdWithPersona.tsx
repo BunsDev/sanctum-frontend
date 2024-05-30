@@ -6,8 +6,9 @@ import {
   IonBackButton,
   IonTitle,
   IonContent,
+  IonSpinner,
 } from "@ionic/react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import PersonaReact from "persona-react";
 
 type AddIdAttributeWithPersonaStep1Props = {};
@@ -52,3 +53,25 @@ export const AddIdAttributeWithPersonaStep1: React.FC<
     </IonPage>
   );
 };
+
+export const AddIdAttributeWithPersonaStep2 = () => {
+  const location = useLocation<{ inquiryId: string }>();
+
+  // call backend
+
+  return (
+    <IonPage>
+    <IonHeader translucent={true}>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton defaultHref="/attributes"></IonBackButton>
+        </IonButtons>
+        <IonTitle>Verify ID</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+      <IonContent fullscreen className="ion-padding">
+        <IonSpinner />
+      </IonContent>
+    </IonPage>
+  )
+}

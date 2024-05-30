@@ -1,10 +1,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { IonContent, IonFooter, IonHeader, IonTitle, IonToolbar, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonPage, IonToast, IonIcon } from '@ionic/react';
+import { IonContent, IonFooter, IonHeader, IonTitle, IonToolbar, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonPage, IonToast, IonIcon, IonButtons } from '@ionic/react';
 import { logoGithub } from 'ionicons/icons';
 import './LandingPage.css'; // Import your custom CSS file for styling
+import { useHistory } from 'react-router';
 
 const LandingPage: React.FC = () => {
+  const history = useHistory();
+
+  const goLogin = () => {
+    history.replace('/login')
+  }
+
+  const goRegister = () => {
+    history.replace('/register')
+  }
 
   return (
     <>
@@ -24,6 +34,12 @@ const LandingPage: React.FC = () => {
             </IonCardContent>
           </IonCard>
           </motion.div>
+          <div>
+            <IonButtons>
+              <IonButton onClick={goLogin}>Login</IonButton>
+              <IonButton onClick={goRegister}>Register</IonButton>
+            </IonButtons>
+          </div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}>
             <IonCard className="landing-card">
               <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />

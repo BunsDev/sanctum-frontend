@@ -1,28 +1,20 @@
 import {
   IonBackButton,
-  IonButton,
   IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonCol,
   IonContent,
-  IonGrid,
   IonHeader,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonList,
   IonPage,
   IonRouterOutlet,
-  IonRow,
   IonSpinner,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { EnterEmail } from "../../components/EnterEmail";
 import {
   Route,
@@ -30,11 +22,18 @@ import {
   useHistory,
   useLocation,
 } from "react-router";
-import { useConfirmCodeMutation, useCreateCodeConfirmationMutation } from "../../app/api/backend";
+import {
+  useConfirmCodeMutation,
+  useCreateCodeConfirmationMutation,
+} from "../../app/api/backend";
 import { AttrbuteType } from "../Attributes/AddAttribute";
 import { EnterConfirmCode } from "../../components/EnterConfirmCode";
 
 const Register: React.FC<RouteComponentProps> = ({ match }) => {
+  useEffect(() => {
+    console.log("meta", import.meta.env);
+  }, []);
+
   return (
     <IonPage>
       <IonRouterOutlet>
@@ -45,7 +44,6 @@ const Register: React.FC<RouteComponentProps> = ({ match }) => {
           exact
           component={RegisterStep3}
         />
-
       </IonRouterOutlet>
     </IonPage>
   );
@@ -64,6 +62,9 @@ const RegisterStep1: React.FC = () => {
     <>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/"></IonBackButton>
+          </IonButtons>
           <IonTitle>Register</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -96,6 +97,7 @@ const RegisterStep2: React.FC = () => {
       createConfirmation({
         type: AttrbuteType.EMAIL,
         value: location.state.email,
+        flow: "REGISTER",
       });
     }
   }, [initializedRef, location]);
@@ -114,7 +116,7 @@ const RegisterStep2: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/register"></IonBackButton>
           </IonButtons>
-          <IonTitle>Add Email</IonTitle>
+          <IonTitle>Register</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
@@ -136,20 +138,23 @@ const RegisterStep2: React.FC = () => {
 
 type RegisterStep3MatchParams = {
   uid: string;
-}
+};
 
-const RegisterStep3: React.FC<RouteComponentProps<RegisterStep3MatchParams>> = ({match}) => {
+const RegisterStep3: React.FC<
+  RouteComponentProps<RegisterStep3MatchParams>
+> = ({ match }) => {
   const history = useHistory();
-  const [ createCodeConfirmation, result ] = useConfirmCodeMutation()
+  const [createCodeConfirmation, result] = useConfirmCodeMutation();
 
   useEffect(() => {
-      if(result.isSuccess) {
-          history.replace('/transactions', { payload: result.data })
-      }
-  }, [result])
+    if (result.isSuccess) {
+      history.replace("/transactions", { result: result.data.result });
+    }
+  }, [result]);
 
   const onConfirm = async (code: string) => {
-      const result = await createCodeConfirmation({ id: match.params.uid, code })
+    const result = await createCodeConfirmation({ id: match.params.uid, code });
+    console.log(result);
   };
 
   return (
@@ -157,9 +162,9 @@ const RegisterStep3: React.FC<RouteComponentProps<RegisterStep3MatchParams>> = (
       <IonHeader translucent={true}>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/add_attribute/EMAIL"></IonBackButton>
+            <IonBackButton defaultHref="/register"></IonBackButton>
           </IonButtons>
-          <IonTitle>Add Email Confirmation</IonTitle>
+          <IonTitle>Register Confirmation</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
@@ -171,7 +176,9 @@ const RegisterStep3: React.FC<RouteComponentProps<RegisterStep3MatchParams>> = (
             <EnterConfirmCode cta={onConfirm} />
           </IonCardContent>
         </IonCard>
-        <pre><code>{JSON.stringify(result, null, 2)}</code></pre>
+        <pre>
+          <code>{JSON.stringify(result, null, 2)}</code>
+        </pre>
       </IonContent>
     </>
   );
