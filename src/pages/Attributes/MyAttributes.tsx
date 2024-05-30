@@ -7,6 +7,7 @@ import {
   IonIcon,
   IonList,
   IonPage,
+  IonSpinner,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -23,11 +24,24 @@ import { AttrbuteType } from "./AddAttribute";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { AttributeItem } from "../../components/AttributeItem";
+import { useGetAttributesQuery } from "../../app/api/backend";
+import { useEffect } from "react";
 
 const MyAttributes: React.FC = () => {
   const myAttributes = useSelector(
     (state: RootState) => state.attributes.myAttributes
   );
+  const identityId = useSelector(
+    (state: RootState) => state.connections.identityId
+  );
+  const { data, error, isLoading, refetch } = useGetAttributesQuery(
+    identityId,
+    { refetchOnMountOrArgChange: 10 }
+  );
+
+  useEffect(() => {
+    console.log("data", data);
+  }, data);
 
   return (
     <IonPage>
@@ -42,11 +56,16 @@ const MyAttributes: React.FC = () => {
             <IonTitle size="large">My Attributes</IonTitle>
           </IonToolbar>
         </IonHeader>
-        {/*  */}
 
-        <IonList>
-          {myAttributes.map((attribute, idx) => <AttributeItem key={`attr-${idx}`} attribute={attribute} />)}
-        </IonList>
+        {isLoading && <IonSpinner />}
+
+        {data && (
+          <IonList>
+            {data.map((attribute: any, idx: number) => (
+              <AttributeItem key={`attr-${idx}`} attribute={attribute} />
+            ))}
+          </IonList>
+        )}
 
         {/*  */}
         <IonFab slot="fixed" vertical="bottom" horizontal="end">

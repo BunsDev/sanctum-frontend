@@ -1,14 +1,11 @@
 import {
   IonApp,
   IonRouterOutlet,
-  IonSplitPane,
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 
-import Menu from "./components/Menu";
-import Page from "./pages/Page";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -42,29 +39,44 @@ import "./theme/variables.css";
 import Login from "./pages/Login";
 
 import Register from "./pages/Register/Register";
-import RegisterConfirmation from "./pages/Register/RegisterConfirm";
 import MyAttributes from "./pages/Attributes/MyAttributes";
 import AddAttribute from "./pages/Attributes/AddAttribute";
 import { CreateTransaction } from "./pages/transactions/CreateTransaction";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import { useEffect } from "react";
+import { Dispatch } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./app/store";
+import { useProviders } from "./hooks/useProviders";
+
 setupIonicReact();
 
 const App: React.FC = () => {
+  const providers = useProviders();
+  const dispatch: Dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (window.ethereum) {
+      // checkHasIdentity().then()
+    } else {
+      // ask the user to switch to an wallet enabled browser
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("App.useEffect", providers);
+  }, [providers]);
+
   return (
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet id="main">
           <Route path="/" exact={true}>
-            <Redirect to={"/attributes"} />
+            <Redirect to={"/landingpage"} />
           </Route>
-          <Route path="/login" exact={true} component={Login} />
-          <Route path="/register" exact={true} component={Register} />
           <Route path="/landingPage" exact={true} component={LandingPage} />
-          <Route
-            path="/register_confirmation"
-            exact={true}
-            component={RegisterConfirmation}
-          />
+          <Route path="/login" exact={true} component={Login} />
+          <Route path="/register" component={Register} />
           <Route path="/attributes" exact={true} component={MyAttributes} />
           <Route path="/add_attribute" component={AddAttribute} />
           <Route
