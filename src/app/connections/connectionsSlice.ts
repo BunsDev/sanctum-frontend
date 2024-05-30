@@ -35,16 +35,18 @@ export const getIdentityForAccount = createAsyncThunk<
         from: account,
       });
 
-    const emptyBytes = /^0x0+$/.test(identityId);
-    console.log({ identityId, emptyBytes });
+    const isValidIdentity = identityId.length > 0 && !/^0x0+$/.test(identityId);
+    console.log({ identityId, isValidIdentity });
 
-    if (emptyBytes) {
-      thunkApi.dispatch(setIdentity(""));
-    } else {
-      thunkApi.dispatch(setIdentity(identityId));
-    }
+    thunkApi.dispatch(setIdentity({identityId, isValidIdentity}));
 
-    return identityId;
+    // if (emptyBytes) {
+    //   thunkApi.dispatch(setIdentity(""));
+    // } else {
+    //   thunkApi.dispatch(setIdentity(identityId));
+    // }
+
+    return {identityId, isValidIdentity};
   } catch (e) {
     console.error(e);
   }
@@ -53,7 +55,7 @@ export const getIdentityForAccount = createAsyncThunk<
 // Then, handle actions in your reducers:
 const connectionsSlice = createSlice({
   name: "connections",
-  initialState: { providers: [], wallets: [], loading: "idle", identityId: "" },
+  initialState: { providers: [], wallets: [], loading: "idle", identityId: "", isValidIdentity: false },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
     setProviders: (state, action: PayloadAction<any>) => {
@@ -66,7 +68,8 @@ const connectionsSlice = createSlice({
     setIdentity: (state, action: PayloadAction<any>) => {
       return {
         ...state,
-        identityId: action.payload,
+        identityId: action.payload.identityId,
+        isValidIdentity: action.payload.isValidIdentity,
       };
     },
   },

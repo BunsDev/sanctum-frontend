@@ -7,7 +7,7 @@ export const backendApi = createApi({
     getAttributes: builder.query<any, string>({
       // How to authenticate here
       query: (identityId) => `identity/${identityId}/attributes`,
-    }), 
+    }),
     //
     createCodeConfirmation: builder.mutation<any, any>({
       query: ({ ...payload }) => ({
@@ -56,4 +56,5 @@ export const {
   useUploadPhotoMutation,
   useStoreIdentityMutation,
   useStoreAttributesMutation,
+  useGetAttributesQuery,
 } = backendApi;

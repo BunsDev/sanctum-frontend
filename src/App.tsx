@@ -1,14 +1,11 @@
 import {
   IonApp,
   IonRouterOutlet,
-  IonSplitPane,
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 
-import Menu from "./components/Menu";
-import Page from "./pages/Page";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -42,13 +39,11 @@ import "./theme/variables.css";
 import Login from "./pages/Login";
 
 import Register from "./pages/Register/Register";
-import RegisterConfirmation from "./pages/Register/RegisterConfirm";
 import MyAttributes from "./pages/Attributes/MyAttributes";
 import AddAttribute from "./pages/Attributes/AddAttribute";
 import { CreateTransaction } from "./pages/transactions/CreateTransaction";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import { useEffect } from "react";
-import { Web3 } from "web3";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./app/store";

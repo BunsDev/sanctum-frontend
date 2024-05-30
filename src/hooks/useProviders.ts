@@ -24,9 +24,10 @@ export function useProviders() {
       window.dispatchEvent(new Event("eip6963:requestProvider"));
 
       // Return a function that removes the event listern.
-      // @ts-ignore
-      return () =>
+      return () => {
+        // @ts-ignore
         window.removeEventListener("eip6963:announceProvider", onAnnouncement);
+      }
     });
 
   return providers;

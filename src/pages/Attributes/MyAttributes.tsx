@@ -7,6 +7,7 @@ import {
   IonIcon,
   IonList,
   IonPage,
+  IonSpinner,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -23,11 +24,14 @@ import { AttrbuteType } from "./AddAttribute";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { AttributeItem } from "../../components/AttributeItem";
+import { useGetAttributesQuery } from "../../app/api/backend";
 
 const MyAttributes: React.FC = () => {
   const myAttributes = useSelector(
     (state: RootState) => state.attributes.myAttributes
   );
+  const identityId = useSelector((state: RootState) => state.connections.identityId)
+  const { data, error, isLoading } = useGetAttributesQuery(identityId) 
 
   return (
     <IonPage>
@@ -44,9 +48,13 @@ const MyAttributes: React.FC = () => {
         </IonHeader>
         {/*  */}
 
+        {isLoading && <IonSpinner />}
+
+        {data && (
         <IonList>
-          {myAttributes.map((attribute, idx) => <AttributeItem key={`attr-${idx}`} attribute={attribute} />)}
-        </IonList>
+        {data.map((attribute, idx) => <AttributeItem key={`attr-${idx}`} attribute={attribute} />)}
+      </IonList>
+      )}
 
         {/*  */}
         <IonFab slot="fixed" vertical="bottom" horizontal="end">

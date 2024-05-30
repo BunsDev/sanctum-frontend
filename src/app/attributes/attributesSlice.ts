@@ -5,11 +5,11 @@ import { AttrbuteType } from "../../pages/Attributes/AddAttribute";
 const attributesSlice = createSlice({
   name: "attributes",
   initialState: { myAttributes: [
-    { type: AttrbuteType.EMAIL, name: "my@mailcom" },
-    { type: AttrbuteType.PHONE, name: "(800) 555‑0175" },
-    { type: AttrbuteType.ADDRESS, name: "Street 123, 8000, Zurich, Switzerland" },
-    { type: AttrbuteType.WALLET, name: "mywallet.eth" },
-    { type: AttrbuteType.ID, name: "Firstname Lastname" },
+    // { type: AttrbuteType.EMAIL, name: "my@mailcom" },
+    // { type: AttrbuteType.PHONE, name: "(800) 555‑0175" },
+    // { type: AttrbuteType.ADDRESS, name: "Street 123, 8000, Zurich, Switzerland" },
+    // { type: AttrbuteType.WALLET, name: "mywallet.eth" },
+    // { type: AttrbuteType.ID, name: "Firstname Lastname" },
   ], loading: "idle" },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer

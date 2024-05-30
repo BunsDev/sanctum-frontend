@@ -1,27 +1,27 @@
 import {
+  IonAvatar,
   IonBackButton,
+  IonButton,
   IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonContent,
   IonHeader,
   IonItem,
   IonLabel,
   IonList,
   IonListHeader,
-  IonMenuButton,
   IonPage,
   IonRouterOutlet,
   IonText,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { Route, RouteComponentProps, useHistory, useParams } from "react-router";
+import {
+  Route,
+  RouteComponentProps,
+  useHistory,
+  useParams,
+} from "react-router";
 import "./Page.css";
-import { EnterEmail } from "../components/EnterEmail";
 import { useProviders } from "../hooks/useProviders";
 import { EIP6963ProviderDetail } from "web3/lib/commonjs/providers.exports";
 import { useState } from "react";
@@ -49,41 +49,40 @@ const LoginStep1 = () => {
   const providers = useProviders();
   const dispatch: Dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
-  const [selectedProvider, setSelectedProvider] = useState<EIP6963ProviderDetail | undefined>(undefined);
+  const [selectedProvider, setSelectedProvider] = useState<
+    EIP6963ProviderDetail | undefined
+  >(undefined);
   const [accounts, setAccounts] = useState<string[]>([]);
+  const [showRegisterButton, setShowRegisterButton] = useState(false)
 
   const selectProvider = async (p: EIP6963ProviderDetail) => {
-    console.log(p)
+    console.log(p);
     setSelectedProvider(p);
-    //
-    // try {
-    //   const accounts = await p.provider.request({ 
-    //     method: "eth_requestAccounts"
-    //   })
-    //   console.log({accounts})
-    //   setAccounts(accounts as string[]);
-    // } catch(error) {
-    //   console.error(error)
-    // }
     try {
-      const web3 = new Web3(p.provider)
-      const as = await web3.eth.getAccounts()
-      setAccounts(as)
-    } catch(error) {
-      console.log(error)
+      const web3 = new Web3(p.provider);
+      await web3.currentProvider?.request({ method: "eth_requestAccounts" });
+      const as = await web3.eth.getAccounts();
+      setAccounts(as);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   const selectAccount = async (account: string) => {
-    console.log(account)
+    console.log(account);
+    const resp = await dispatch(
+      // @ts-ignore
+      getIdentityForAccount({ providerInfo: selectedProvider!, account })
+    );
+    console.log("after dispatch", resp);
     // @ts-ignore
-    const resp = await dispatch(getIdentityForAccount({providerInfo: selectedProvider!, account}))
-    console.log('after dispatch', resp)
-    // @ts-ignore
-    if(resp.type === 'identity/get/fulfilled' && resp.payload.length > 0) {
-      history.replace("/attributes")
+    if (resp.type === "identity/get/fulfilled" && resp.payload.isValidIdentity) {
+      history.replace("/attributes");
+    } else {
+      // alert("Error");
+      setShowRegisterButton(true)
     }
-  }
+  };
 
   return (
     <>
@@ -96,20 +95,42 @@ const LoginStep1 = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
-      <IonText><h1>Login</h1></IonText>
-      <IonText><h4>with SanctumLink</h4></IonText>
-      <IonList inset={false}>
+        <IonText>
+          <h1>Login</h1>
+        </IonText>
+        <IonText>
+          <h4>with SanctumLink</h4>
+        </IonText>
+        <IonList inset={false}>
           <IonListHeader>Select Wallet Provider</IonListHeader>
           {providers.map((p: EIP6963ProviderDetail) => {
-            return <IonItem onClick={() => selectProvider(p)} key={p.info.uuid}><IonLabel>{p.info.name}</IonLabel></IonItem>
+            return (
+              <IonItem onClick={() => selectProvider(p)} key={p.info.uuid}>
+                <IonAvatar aria-hidden="true" slot="start">
+                  <img alt="" src={p.info.icon} />
+                </IonAvatar>
+                <IonLabel>{p.info.name}</IonLabel>
+              </IonItem>
+            );
           })}
         </IonList>
         <IonList>
-        <IonListHeader>Select Account</IonListHeader>
-        {accounts.map((a) => {
-            return <IonItem onClick={() => selectAccount(a)} key={a}><IonLabel>{a}</IonLabel></IonItem>
+          <IonListHeader>Select Account</IonListHeader>
+          {accounts.map((a) => {
+            return (
+              <IonItem onClick={() => selectAccount(a)} key={a}>
+                <IonLabel>{a}</IonLabel>
+              </IonItem>
+            );
           })}
         </IonList>
+        {showRegisterButton && (
+          <>
+            <hr />
+            <p><IonText color={"danger"}>No Identity found!</IonText></p>
+            <IonButton expand="block" href="/register">Register</IonButton>
+          </>
+        )}
       </IonContent>
     </>
   );
