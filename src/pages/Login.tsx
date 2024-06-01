@@ -28,7 +28,7 @@ import { useState } from "react";
 import { Dispatch } from "@reduxjs/toolkit";
 import { AppDispatch } from "../app/store";
 import { useDispatch } from "react-redux";
-import { getIdentityForAccount } from "../app/connections/connectionsSlice";
+import { getIdentityForAccount, setSelectedAccount, setSelectedProviderName } from "../app/connections/connectionsSlice";
 import { Web3 } from "web3";
 
 const Login: React.FC<RouteComponentProps> = ({ match }) => {
@@ -58,6 +58,7 @@ const LoginStep1 = () => {
   const selectProvider = async (p: EIP6963ProviderDetail) => {
     console.log(p);
     setSelectedProvider(p);
+    dispatch(setSelectedProviderName(p.info.name));
     try {
       const web3 = new Web3(p.provider);
       await web3.currentProvider?.request({ method: "eth_requestAccounts" });
@@ -70,6 +71,7 @@ const LoginStep1 = () => {
 
   const selectAccount = async (account: string) => {
     console.log(account);
+    dispatch(setSelectedAccount(account));
     const resp = await dispatch(
       // @ts-ignore
       getIdentityForAccount({ providerInfo: selectedProvider!, account })

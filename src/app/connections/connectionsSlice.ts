@@ -40,12 +40,6 @@ export const getIdentityForAccount = createAsyncThunk<
 
     thunkApi.dispatch(setIdentity({identityId, isValidIdentity}));
 
-    // if (emptyBytes) {
-    //   thunkApi.dispatch(setIdentity(""));
-    // } else {
-    //   thunkApi.dispatch(setIdentity(identityId));
-    // }
-
     return {identityId, isValidIdentity};
   } catch (e) {
     console.error(e);
@@ -55,7 +49,15 @@ export const getIdentityForAccount = createAsyncThunk<
 // Then, handle actions in your reducers:
 const connectionsSlice = createSlice({
   name: "connections",
-  initialState: { providers: [], wallets: [], loading: "idle", identityId: "", isValidIdentity: false },
+  initialState: { 
+    providers: [],
+    wallets: [],
+    loading: "idle",
+    selectedProviderName: "",
+    selectedAccount: "",
+    identityId: "",
+    isValidIdentity: false,
+  },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
     setProviders: (state, action: PayloadAction<any>) => {
@@ -72,6 +74,18 @@ const connectionsSlice = createSlice({
         isValidIdentity: action.payload.isValidIdentity,
       };
     },
+    setSelectedProviderName: (state, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        selectedProviderName: action.payload,
+      }
+    },
+    setSelectedAccount: (state, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        selectedAccount: action.payload,
+      }
+    },
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
@@ -85,6 +99,6 @@ const connectionsSlice = createSlice({
 // Extract the action creators object and the reducer
 const { actions, reducer } = connectionsSlice;
 // Extract and export each action creator by name
-export const { setProviders, setIdentity } = actions;
+export const { setProviders, setIdentity, setSelectedProviderName, setSelectedAccount } = actions;
 // Export the reducer, either as a default or named export
 export default reducer;

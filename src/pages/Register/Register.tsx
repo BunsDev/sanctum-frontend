@@ -176,9 +176,9 @@ const RegisterStep3: React.FC<
             <EnterConfirmCode cta={onConfirm} />
           </IonCardContent>
         </IonCard>
-        <pre>
+        {/* <pre>
           <code>{JSON.stringify(result, null, 2)}</code>
-        </pre>
+        </pre> */}
       </IonContent>
     </>
   );
