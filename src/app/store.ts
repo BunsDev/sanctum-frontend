@@ -1,13 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { backendApi } from './api/backend'
-import confirmationsReducer from './confirmations/confirmationsSlice'
-import attributesReducer from './attributes/attributesSlice'
 
 export const store = configureStore({
   reducer: {
-    confirmations: confirmationsReducer,
-    attributes: attributesReducer,
      // Add the generated reducer as a specific top-level slice
      [backendApi.reducerPath]: backendApi.reducer,
   },

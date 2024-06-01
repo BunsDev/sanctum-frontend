@@ -1,14 +1,10 @@
 import {
   IonApp,
   IonRouterOutlet,
-  IonSplitPane,
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
-
-import Menu from "./components/Menu";
-import Page from "./pages/Page";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -39,14 +35,7 @@ import "@ionic/react/css/palettes/dark.system.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import Login from "./pages/Login";
 
-import Register from "./pages/Register/Register";
-import RegisterConfirmation from "./pages/Register/RegisterConfirm";
-import MyAttributes from "./pages/Attributes/MyAttributes";
-import AddAttribute from "./pages/Attributes/AddAttribute";
-import { CreateTransaction } from "./pages/transactions/CreateTransaction";
-import LandingPage from "./pages/LandingPage/LandingPage";
 import login from "./pages/EcommerceTestCase/EcommerceLogin";
 import ProductPage from "./pages/EcommerceTestCase/ProductPage";
 import CartPage from "./pages/EcommerceTestCase/CartPage";
@@ -58,36 +47,11 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonRouterOutlet id="main">
           <Route path="/" exact={true}>
-            <Redirect to={"/attributes"} />
+            <Redirect to={"/ProductPage"} />
           </Route>
-          <Route path="/login" exact={true} component={Login} />
-          <Route path="/register" exact={true} component={Register} />
-          <Route path="/landingPage" exact={true} component={LandingPage} />
           <Route path="/login" exact={true} component={login} />
           <Route path="/ProductPage" exact={true} component={ProductPage} />
           <Route path="/CartPage" exact={true} component={CartPage} />
-          <Route
-            path="/register_confirmation"
-            exact={true}
-            component={RegisterConfirmation}
-          />
-          <Route path="/attributes" exact={true} component={MyAttributes} />
-          <Route path="/add_attribute" component={AddAttribute} />
-          <Route
-            path="/transactions"
-            exact={true}
-            component={CreateTransaction}
-          />
-
-          {/* <IonSplitPane contentId="main">
-            <Menu />
-            <Route path="/" exact={true}>
-              <Redirect to="/folder/Inbox" />
-            </Route>
-            <Route path="/folder/:name" exact={true}>
-              <Page />
-            </Route>
-          </IonSplitPane> */}
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

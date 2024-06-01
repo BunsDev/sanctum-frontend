@@ -14,6 +14,8 @@ import {
   IonList,
   IonItem,
   IonLabel,
+  IonBackButton,
+  IonButtons,
 } from '@ionic/react';
 import { useLocation, useHistory } from 'react-router-dom';
 import './CartPage.css';
@@ -33,7 +35,10 @@ const CartPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar color="primary">
-          <IonTitle>Cart</IonTitle>
+           <IonButtons slot="start">
+            <IonBackButton defaultHref="/ProductPage" />
+          </IonButtons>
+         <IonTitle>Cart</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">

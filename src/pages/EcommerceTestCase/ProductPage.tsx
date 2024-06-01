@@ -47,9 +47,9 @@ const ProductPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar color="primary">
-          <IonButtons slot="start">
+          {/* <IonButtons slot="start">
             <IonBackButton defaultHref="/Ecommerce" />
-          </IonButtons>
+          </IonButtons> */}
           <IonTitle>Product Details</IonTitle>
         </IonToolbar>
       </IonHeader>
