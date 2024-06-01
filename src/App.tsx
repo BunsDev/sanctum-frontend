@@ -1,11 +1,6 @@
-import {
-  IonApp,
-  IonRouterOutlet,
-  setupIonicReact,
-} from "@ionic/react";
+import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
-
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -48,6 +43,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./app/store";
 import { useProviders } from "./hooks/useProviders";
+import { Authentication } from "./pages/Authentication/Authentication";
 
 setupIonicReact();
 
@@ -84,6 +80,7 @@ const App: React.FC = () => {
             exact={true}
             component={CreateTransaction}
           />
+          <Route path="/authentication" component={Authentication} />
 
           {/* <IonSplitPane contentId="main">
             <Menu />

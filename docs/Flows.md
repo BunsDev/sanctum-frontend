@@ -47,3 +47,16 @@ sequenceDiagram
     User->>App: Confirm Ethereum Transaction
     App->>SmartContract: Create Identitiy on Blockchain
 ```
+
+## External Authentication
+
+The user is on a e-commerce website and wants to login with the Sanctum Link protocol.
+
+```mermaid
+sequenceDiagram
+    actor User
+    User->>Shop: Login with Sanctum
+    Shop->>Sanctum: Redirect User to Sanctum
+    User->>Sanctum: Approve Login and Data Forwarding
+    Sanctum->>Shop: Redirect back to Shop 
+```

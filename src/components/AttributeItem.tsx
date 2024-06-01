@@ -5,6 +5,9 @@ import {
   IonLabel,
   IonItemOptions,
   IonItemOption,
+  IonCheckbox,
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
 } from "@ionic/react";
 import { AttrbuteType } from "../pages/Attributes/AddAttribute";
 import {
@@ -23,14 +26,45 @@ type AttributeItemProps = {
     AttributeValue: string;
     AttributeType: AttrbuteType;
   };
+  showSelect?: boolean;
+  onSelect?: (add: any[], remove: any[]) => void;
 };
 
-export const AttributeItem: React.FC<AttributeItemProps> = ({ attribute }) => {
+export const AttributeItem: React.FC<AttributeItemProps> = ({
+  attribute,
+  showSelect = false,
+  onSelect
+}) => {
+
+  const _onSelectCallback = (d: CheckboxChangeEventDetail, attribute: any) => {
+    // console.log(d, attribute);
+    if(onSelect) {
+      const toAdd = [];
+      const toRemove = [];
+      if(d.checked) {
+        toAdd.push(attribute)
+      } else {
+        toRemove.push(attribute)
+      }
+      onSelect(toAdd, toRemove);
+    }
+  }
+
   return (
     <IonItemSliding>
       <IonItem>
         <AttributeIcon type={attribute.AttributeType} />
-        <IonLabel style={{paddingLeft: '5px'}}>{attribute.AttributeValue}</IonLabel>
+        {showSelect ? (
+          <IonCheckbox justify="end" onIonChange={(e) => _onSelectCallback(e.detail, attribute)}>
+            <IonLabel style={{ paddingLeft: "5px" }}>
+              {attribute.AttributeValue}
+            </IonLabel>
+          </IonCheckbox>
+        ) : (
+          <IonLabel style={{ paddingLeft: "5px" }}>
+            {attribute.AttributeValue}
+          </IonLabel>
+        )}
       </IonItem>
       <IonItemOptions>
         <IonItemOption>Favorite</IonItemOption>

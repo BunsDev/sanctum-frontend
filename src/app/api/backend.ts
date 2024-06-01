@@ -39,6 +39,13 @@ export const backendApi = createApi({
         body: payload,
       }),
     }),
+    storeAuthentication: builder.mutation<any, any>({
+      query: ({ ...payload }) => ({
+        url: `authentication`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
     //
     uploadPhoto: builder.mutation<any, any>({
       query: ({ ...payload }) => ({
@@ -57,4 +64,5 @@ export const {
   useStoreIdentityMutation,
   useStoreAttributesMutation,
   useGetAttributesQuery,
+  useStoreAuthenticationMutation,
 } = backendApi;
