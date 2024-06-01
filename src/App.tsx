@@ -39,6 +39,7 @@ import "./theme/variables.css";
 import login from "./pages/EcommerceTestCase/EcommerceLogin";
 import ProductPage from "./pages/EcommerceTestCase/ProductPage";
 import CartPage from "./pages/EcommerceTestCase/CartPage";
+import { CheckoutPage } from "./pages/EcommerceTestCase/Checkout";
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -52,6 +53,7 @@ const App: React.FC = () => {
           <Route path="/login" exact={true} component={login} />
           <Route path="/ProductPage" exact={true} component={ProductPage} />
           <Route path="/CartPage" exact={true} component={CartPage} />
+          <Route path="/checkout" exact={true} component={CheckoutPage} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

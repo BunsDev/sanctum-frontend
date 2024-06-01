@@ -2,25 +2,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const backendApi = createApi({
     reducerPath: 'pokemonApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3030/api/v1/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BACKEND_URL }),
     endpoints: (builder) => ({
-      // 
-      createCodeConfirmation: builder.mutation<any, any>({
-        query: ({ ...payload }) => ({
-          url: 'confirmation',
-          method: 'POST',
-          body: payload
-        })
-      }),
-      // 
-      confirmCode: builder.mutation<any, any>({
-        query: ({ id, ...payload }) => ({
-          url: `confirmation/${id}`,
-          method: 'PUT',
-          body: payload,
-        })
+      getAuthentication: builder.query<any, string>({
+        // How to authenticate here
+        query: (id) => `authentication/${id}`,
       }),
     }),
   })
 
-  export const { useCreateCodeConfirmationMutation, useConfirmCodeMutation } = backendApi
+  export const { useGetAuthenticationQuery } = backendApi

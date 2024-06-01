@@ -27,8 +27,7 @@ const CartPage: React.FC = () => {
 
   const checkout = () => {
     // Implement SanctumLink checkout process here
-    alert('Checkout using SanctumLink');
-    history.push('/ProductPage');
+    window.location.href = import.meta.env.VITE_SANCTUM_LINK_AUTH_URL;
   };
 
   return (
