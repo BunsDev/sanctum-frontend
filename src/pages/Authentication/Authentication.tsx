@@ -87,9 +87,9 @@ const AuthenticationStep1: React.FC = ({}) => {
     );
     console.log("after dispatch", resp);
 
-    // @ts-ignore
     if (
-      resp.type === "identity/get/fulfilled" && resp.payload.isValidIdentity
+    // @ts-ignore
+    resp.type === "identity/get/fulfilled" && resp.payload.isValidIdentity
     ) {
       history.replace(`/authentication/approval`);
     }
