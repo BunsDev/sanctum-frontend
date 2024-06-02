@@ -20,9 +20,9 @@ export const CheckoutPage: React.FC<RouteComponentProps> = ({}) => {
 
   const { data, error, isLoading } = useGetAuthenticationQuery(authId!);
 
-    const getProp = (data: any[] = [], type: string) => {
-        return (data.find(a => a.AttributeType === type) ?? {}).AttributeValue
-    }
+  const getProp = (data: any[] = [], type: string) => {
+    return (data.find((a) => a.AttributeType === type) ?? {}).AttributeValue;
+  };
 
   return (
     <IonPage>
@@ -37,18 +37,24 @@ export const CheckoutPage: React.FC<RouteComponentProps> = ({}) => {
       <IonContent className="ion-padding">
         {isLoading && <IonSpinner />}
 
-        <IonText>Ship To:</IonText>
-        <br />
-        <IonText>{getProp(data.attributes, 'NameOfUser')}</IonText>
-        <br />
-        <IonText>{getProp(data.attributes, 'PrimaryPhysicalAddress')}</IonText>
-        <br />
-        <IonText>{getProp(data.attributes, 'PrimaryEmail')}</IonText>
-        <br />
+        {data && (
+          <>
+            <IonText>Ship To:</IonText>
+            <br />
+            <IonText>{getProp(data.attributes, "NameOfUser")}</IonText>
+            <br />
+            <IonText>
+              {getProp(data.attributes, "PrimaryPhysicalAddress")}
+            </IonText>
+            <br />
+            <IonText>{getProp(data.attributes, "PrimaryEmail")}</IonText>
+            <br />
+          </>
+        )}
 
         <hr />
-        <IonText color={'medium'}>{JSON.stringify(data)}</IonText>
-        <IonText color={'danger'}>{JSON.stringify(error)}</IonText>
+        <IonText color={"medium"}>{JSON.stringify(data)}</IonText>
+        <IonText color={"danger"}>{JSON.stringify(error)}</IonText>
       </IonContent>
     </IonPage>
   );
