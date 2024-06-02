@@ -63,6 +63,7 @@ export const AttributeItem: React.FC<AttributeItemProps> = ({
         ) : (
           <IonLabel style={{ paddingLeft: "5px" }}>
             {attribute.AttributeValue}
+            <p>{attribute.AttributeType}</p>
           </IonLabel>
         )}
       </IonItem>
@@ -82,17 +83,17 @@ const AttributeIcon: React.FC<AttributeIconProps> = ({ type }) => {
   switch (type) {
     case AttrbuteType.EMAIL:
     case AttrbuteType.PrimaryEmail:
-      return <IonIcon icon={mail} about="Mail" title="Email"></IonIcon>;
+      return <IonIcon icon={mail} about="Mail" title="Email" slot="start"></IonIcon>;
     case AttrbuteType.PHONE:
-      return <IonIcon icon={call} about="Phone" title="Phone"></IonIcon>;
+      return <IonIcon icon={call} about="Phone" title="Phone" slot="start"></IonIcon>;
     case AttrbuteType.ADDRESS:
-      return <IonIcon icon={home} about="Addres" title="Address"></IonIcon>;
+      return <IonIcon icon={home} about="Addres" title="Address" slot="start"></IonIcon>;
     case AttrbuteType.WALLET:
     case AttrbuteType.Wallet:
-      return <IonIcon icon={wallet} about="Wallet" title="Wallets"></IonIcon>;
+      return <IonIcon icon={wallet} about="Wallet" title="Wallets" slot="start"></IonIcon>;
     case AttrbuteType.ID:
-      return <IonIcon icon={person} about="ID" title="ID"></IonIcon>;
+      return <IonIcon icon={person} about="ID" title="ID" slot="start"></IonIcon>;
     default:
-      return <IonIcon icon={help} about="?" title="?"></IonIcon>;
+      return <IonIcon icon={help} about="?" title="?" slot="start"></IonIcon>;
   }
 };

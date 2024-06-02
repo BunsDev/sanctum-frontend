@@ -32,6 +32,7 @@ export const EnterConfirmCode: React.FC<EnterConfirmCodeProps> = ({ cta }) => {
               labelPlacement="floating"
               value={confirmation}
               onIonInput={(e) => setConfirmation(e.detail.value!)}
+              autocomplete="one-time-code"
             ></IonInput>
           </IonItem>
         </IonCol>

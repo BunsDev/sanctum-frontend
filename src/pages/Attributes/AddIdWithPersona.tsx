@@ -7,9 +7,14 @@ import {
   IonTitle,
   IonContent,
   IonSpinner,
+  IonText,
 } from "@ionic/react";
 import { useHistory, useLocation } from "react-router";
 import PersonaReact from "persona-react";
+import { useStoreAttributesMutation } from "../../app/api/backend";
+import { useEffect, useRef } from "react";
+import { RootState } from "../../app/store";
+import { useSelector } from "react-redux";
 
 type AddIdAttributeWithPersonaStep1Props = {};
 
@@ -41,7 +46,7 @@ export const AddIdAttributeWithPersonaStep1: React.FC<
             }
             onComplete={({ inquiryId, status, fields }) => {
               console.log("onComplete", { inquiryId, status, fields });
-              history.replace(`/add_attribute/ID/verify`, { inquiryId })
+              history.replace(`/add_attribute/ID/verify`, { inquiryId, fields })
             }}
             onCancel={({ inquiryId, sessionToken }) =>
               console.log("onCancel", { inquiryId, sessionToken })
@@ -55,9 +60,75 @@ export const AddIdAttributeWithPersonaStep1: React.FC<
 };
 
 export const AddIdAttributeWithPersonaStep2 = () => {
-  const location = useLocation<{ inquiryId: string }>();
+  const identityId = useSelector(
+    (state: RootState) => state.connections.identityId
+  );
+  const location = useLocation<{ inquiryId: string, fields: any }>();
+  const [storeAttributes, result] = useStoreAttributesMutation();
+  const history = useHistory();
+  const initializedRef = useRef(false);
 
-  // call backend
+  const save = async () => {
+    // TODO: verify on the backend
+    const response = await storeAttributes({
+      id: identityId,
+      attributes: [
+        {
+          type: "NameOfUser",
+          value: location.state.fields['name-first'].value +' '+ location.state.fields['name-last'].value,
+          valueHash: "",
+          signature: ""
+        },
+        {
+          type: "DateOfBirth",
+          value: new Date(location.state.fields['birthdate'].value).getTime().toFixed(0),
+          valueHash: "",
+          signature: ""
+        },
+        {
+          type: "CountryOfBirth",
+          value: location.state.fields['address-country-code'].value,
+          valueHash: "",
+          signature: ""
+        },
+        {
+          type: "NationalId",
+          value: location.state.fields['identification-number'].value,
+          valueHash: "",
+          signature: ""
+        },
+        {
+          type: "CurrentCountryOfResidence",
+          value: location.state.fields['address-country-code'].value,
+          valueHash: "",
+          signature: ""
+        },
+        {
+          type: "CurrentStateOfResidence",
+          value: location.state.fields['address-subdivision'].value,
+          valueHash: "",
+          signature: ""
+        },
+        {
+          type: "PrimaryPhysicalAddress",
+          value: location.state.fields['address-street-1'].value +', '+ location.state.fields['address-city'].value,
+          valueHash: "",
+          signature: ""
+        },
+      ]
+    })
+  }
+
+  useEffect(() => {
+    // work around StrictMode. See: https://react.dev/reference/react/StrictMode
+    if(!initializedRef.current) {
+      initializedRef.current = true;
+      save().then(() => {
+        console.log('Done')
+        history.replace('/attributes')
+      })
+      }
+  }, [initializedRef])
 
   return (
     <IonPage>
@@ -70,7 +141,10 @@ export const AddIdAttributeWithPersonaStep2 = () => {
       </IonToolbar>
     </IonHeader>
       <IonContent fullscreen className="ion-padding">
+        <IonText>Storing Identity Data</IonText>
         <IonSpinner />
+        {/* <hr />
+        <IonText>{JSON.stringify(location.state.fields)}</IonText> */}
       </IonContent>
     </IonPage>
   )

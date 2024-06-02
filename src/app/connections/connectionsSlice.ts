@@ -5,6 +5,7 @@ import {
   EIP6963ProviderDetail,
 } from "web3/lib/commonjs/providers.exports";
 import CreateAndAuthenticateSanctumLinkidentityV2 from "../../abi/CreateAndAuthenticateSanctumLinkidentityV2.json";
+import SlcTokenContract from "../../abi/SLCTokenContractHelperConfig.json";
 
 type GetIdentityForAccountProps = {
   providerInfo: EIP6963ProviderDetail;
@@ -46,6 +47,42 @@ export const getIdentityForAccount = createAsyncThunk<
   }
 });
 
+export const getTokenAmount = createAsyncThunk<
+any,
+GetIdentityForAccountProps
+>("token/amount", async (payload, thunkApi) => {
+  try {
+    const { providerInfo, account } = payload;
+    console.log("thunkApi", providerInfo, account);
+
+    const web3 = new Web3(providerInfo.provider);
+    // console.log(web3.currentProvider)
+    // console.log(web3.utils.toChecksumAddress(account));
+
+    const tokenContract = new web3.eth.Contract(
+      SlcTokenContract.abi,
+      import.meta.env.VITE_SANCTUM_LINK_IDENTITY_TOKEN_CONTRACT_ADDRESS
+    );
+
+    const balance = await tokenContract.methods
+    .balanceOf(account)
+    .call({
+      from: account,
+    });
+
+    console.log({balance})
+
+    // @ts-ignore
+    const amount = web3.utils.fromWei(balance, 'ether')
+
+    thunkApi.dispatch(setSlcToken(amount));
+
+    return amount
+  } catch(e) {
+    console.error(e)
+  }
+});
+
 // Then, handle actions in your reducers:
 const connectionsSlice = createSlice({
   name: "connections",
@@ -57,6 +94,7 @@ const connectionsSlice = createSlice({
     selectedAccount: "",
     identityId: "",
     isValidIdentity: false,
+    slcToken: '0',
   },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
@@ -86,6 +124,12 @@ const connectionsSlice = createSlice({
         selectedAccount: action.payload,
       }
     },
+    setSlcToken: (state, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        slcToken: action.payload,
+      }
+    }
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
@@ -99,6 +143,6 @@ const connectionsSlice = createSlice({
 // Extract the action creators object and the reducer
 const { actions, reducer } = connectionsSlice;
 // Extract and export each action creator by name
-export const { setProviders, setIdentity, setSelectedProviderName, setSelectedAccount } = actions;
+export const { setProviders, setIdentity, setSelectedProviderName, setSelectedAccount, setSlcToken } = actions;
 // Export the reducer, either as a default or named export
 export default reducer;

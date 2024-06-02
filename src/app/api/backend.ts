@@ -36,7 +36,7 @@ export const backendApi = createApi({
       query: ({ id, ...payload }) => ({
         url: `identity/${id}/attributes`,
         method: "POST",
-        body: payload,
+        body: payload.attributes,
       }),
     }),
     storeAuthentication: builder.mutation<any, any>({
