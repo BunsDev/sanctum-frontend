@@ -33,7 +33,6 @@ npm install
 ```bash
 # Start development server
 npm run dev
-
 ```
 
 ## Testing
@@ -42,5 +41,5 @@ We use Cypress for end-to-end testing. Ensure Cypress is installed and configure
 
 ```bash
 # Run Cypress tests
-pnpm run cypress:open
+npm run cypress:open
 ```
