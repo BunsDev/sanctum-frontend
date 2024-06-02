@@ -20,6 +20,10 @@ export const CheckoutPage: React.FC<RouteComponentProps> = ({}) => {
 
   const { data, error, isLoading } = useGetAuthenticationQuery(authId!);
 
+    const getProp = (data: any[] = [], type: string) => {
+        return (data.find(a => a.AttributeType === type) ?? {}).AttributeValue
+    }
+
   return (
     <IonPage>
       <IonHeader>
@@ -32,7 +36,18 @@ export const CheckoutPage: React.FC<RouteComponentProps> = ({}) => {
       </IonHeader>
       <IonContent className="ion-padding">
         {isLoading && <IonSpinner />}
-        <IonText>{JSON.stringify(data)}</IonText>
+
+        <IonText>Ship To:</IonText>
+        <br />
+        <IonText>{getProp(data.attributes, 'NameOfUser')}</IonText>
+        <br />
+        <IonText>{getProp(data.attributes, 'PrimaryPhysicalAddress')}</IonText>
+        <br />
+        <IonText>{getProp(data.attributes, 'PrimaryEmail')}</IonText>
+        <br />
+
+        <hr />
+        <IonText color={'medium'}>{JSON.stringify(data)}</IonText>
         <IonText color={'danger'}>{JSON.stringify(error)}</IonText>
       </IonContent>
     </IonPage>
