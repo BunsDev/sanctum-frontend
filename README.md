@@ -7,7 +7,7 @@
 ![React](https://img.shields.io/badge/React-blue)
 ![CSS](https://img.shields.io/badge/CSS-blue)
 
-> Seamless Identity Verification for Web3.
+> The Sanctum Link Protocol: Revolutionizing Web3 KYC.
 
 This is the frontend for the SanctumLink project at the [Chainlink Block Magic 2024 Hackathon](https://chain.link/hackathon). The repository was scaffolded with [`vite`](https://vitejs.dev/).
 
@@ -21,10 +21,8 @@ This is the frontend for the SanctumLink project at the [Chainlink Block Magic 2
 
 ```bash
 # Install dependencies
-pnpm install
+npm install
 
-# Copy & fill environments
-cp .env.local.example .env.local
 ```
 
 ## Development
@@ -34,11 +32,8 @@ cp .env.local.example .env.local
 
 ```bash
 # Start development server
-pnpm run dev
+npm run dev
 
-# Build production frontend & start server
-pnpm run build
-pnpm run start
 ```
 
 ## Testing
